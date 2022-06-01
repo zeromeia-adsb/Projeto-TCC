@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Informações de clientes -->
+
+<main class="container">
+
+    <div class="py-5 text-center">
+        <h2>Informações de Funcionário</h2>
+        <p class="lead">Verfique abaixo as informações de {{ funcionario.nome.upper() }}.</p>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-12">
+            <table class="table" action="/info_funcionarios/{{ funcionario.id }}" method="POST"> <!-- Caminho para procura (com ID) -->
+                <!-- Tabela com dados do cliente -->
+                <h4 class="mb-3">Dados Pessoais</h4>
+                <thead class="col-12">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Celular</th>
+                    <th>Data Aniversário</th>
+                    <th>Data Contratação</th>
+                    <th>Função</th>
+                    <th>Ações</th>
+                </thead>
+
+                <tbody class="col-12">
+                    <tr>
+                        <td>{{ funcionario.id }}</td>
+                        <td>{{ funcionario.nome }}</td>
+                        <td>{{ funcionario.email }}</td>
+                        <td>{{ funcionario.telefone }}</td>
+                        <td>{{ funcionario.celular }}</td>
+                        <td>{{ funcionario.dataAniversario }}</td>
+                        <td>{{ funcionario.dataContrato }}</td>
+                        <td>{{ funcionario.funcao }}</td>
+                        <td>
+                            <a href="/editar_funcionarios/{{funcionario.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </div>
+
+    <!-- Botões da parte de baixo -->
+    <div class="row g-5 p-3">
+        <!-- Cria orçamento -->
+        <div class="col-md-12 col-lg-6 p-2">
+            <a href="#">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">
+                    Criar orçamento
+                </button>
+            </a>
+        </div>
+
+        <!-- Retorno para consulta -->
+        <div class="col-md-12 col-lg-6 p-2">
+            <button class="w-100 btn btn-outline-secondary btn-lg" type="submit" name="return" onclick="history.back()">
+                Voltar para anterior
+            </button>
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
