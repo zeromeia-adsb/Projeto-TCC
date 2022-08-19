@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from distutils.log import info
 from sre_constants import SUCCESS
 
@@ -63,8 +64,9 @@ class Funcionario(db.Model):
         'Data Aniversário', db.String(10), nullable=False)
     dataContrato = db.Column('Data Contrato', db.String(10), nullable=False)
     funcao = db.Column('Função', db.String(150), nullable=False)
+    senha = db.Column('Senha', db.String(50))
 
-    def __init__(self, nome, email, telefone, celular, dataAniversario, dataContrato, funcao):
+    def __init__(self, nome, email, telefone, celular, dataAniversario, dataContrato, funcao, senha):
         self.nome = nome
         self.email = email
         self.telefone = telefone
@@ -72,6 +74,7 @@ class Funcionario(db.Model):
         self.dataAniversario = dataAniversario
         self.dataContrato = dataContrato
         self.funcao = funcao
+        self.senha = None
 
 
 '''
@@ -251,7 +254,7 @@ def deleta_veiculo(id):
 def adiciona_funcionario():
     if request.method == 'POST':
         funcionario = Funcionario(request.form['nome'], request.form['email'], request.form['telefone'],
-                                  request.form['celular'], request.form['dataAniversario'], request.form['dataContrato'], request.form['funcao'])
+                                  request.form['celular'], request.form['dataAniversario'], request.form['dataContrato'], request.form['funcao'], senha=None)
         if funcionario.nome == '' or funcionario.celular == '' or funcionario.dataAniversario == '' or funcionario.dataContrato == '' or funcionario.funcao == '':
             mensagem = 'Não deixe campos obrigatórios em branco!'
             return render_template('cadastrar_funcionario.html', mensagem=mensagem)
@@ -288,6 +291,7 @@ def edita_funcionario(id):
         funcionario.dataAniversario = request.form['dataAniversario']
         funcionario.dataContrato = request.form['dataContrato']
         funcionario.funcao = request.form['funcao']
+        funcionario.senha = None
         db.session.commit()
         # validação
         mensagem = f"{funcionario.nome} foi editado(a) com sucesso! Clique novamente em pesquisar para ver os registros!"
@@ -309,6 +313,11 @@ def deleta_funcionario(id):
 def info_funcionario(id):
     funcionario = Funcionario.query.get(id)
     return render_template('info_funcionarios.html', funcionario=funcionario)
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 
 @app.route('/cadastrar_produto', methods=['GET', 'POST'])
