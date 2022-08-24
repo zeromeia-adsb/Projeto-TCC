@@ -1,13 +1,18 @@
+from ast import FunctionDef
 from asyncio.windows_events import NULL
 from distutils.log import info
+from doctest import debug
+from pickle import TRUE
 from sre_constants import SUCCESS
 
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for,Blueprint
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import (Column, Date, ForeignKey, Integer, String, Table,
                         create_engine)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
+
 
 app = Flask(__name__, template_folder='templates')
 
@@ -103,9 +108,48 @@ class Produto(db.Model):
         self.nome = nome
         self.descricao = descricao
         self.valor = valor
+             
 
 
-@app.route('/')
+@app.route('/login', methods=['POST'])
+def login_post():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    #remember = True if request.form.get('remember') else False
+
+    user = Funcionario.query.filter_by(email=email).first()
+
+    # check if the user actually exists
+    # take the user-supplied password, hash it, and compare it to the hashed password in the database
+    #if not user or not check_password_hash(user.senha, password):
+    if user == None:
+        flash('Usuario ou senha incorreto')
+        return redirect(url_for('login'))
+
+    if user.senha == password:
+        return redirect(url_for('index')) # if the user doesn't exist or password is wrong, reload the page
+
+    # if the above check passes, then we know the user has the right credentials
+    flash('Usuario ou senha incorreto')
+    return redirect(url_for('login'))
+
+
+#region 
+@app.route('/validalogin/<string:_email>/<string:_senha>',methods=['GET'])
+def valida_login(_email,_senha):
+    funcionario = Funcionario.query.filter_by(email=_email).first()
+
+    if funcionario.senha == None:
+        return SUCCESS
+    elif funcionario.senha == _senha:
+        return "Sucesso"
+    elif funcionario == None:
+        return "Não encontrado"
+
+
+#endregion
+
+@app.route('/index')
 def index():
     cliente = Cliente.query.all()
     return render_template("index.html", clientes=cliente)
@@ -315,7 +359,7 @@ def info_funcionario(id):
     return render_template('info_funcionarios.html', funcionario=funcionario)
 
 
-@app.route('/login')
+@app.route('/')
 def login():
     return render_template('login.html')
 
@@ -383,4 +427,5 @@ def info_produto(id):
 if __name__ == '__main__':
     db.create_all()
     app.secret_key = "superchavesecreta"
-    app.run(debug=True)
+    app.run()
+     

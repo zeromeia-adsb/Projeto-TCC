@@ -5,3 +5,4 @@ SQLAlchemy==0.7.9
 Werkzeug==0.8.3
 python-openid==2.2.5
 sqlalchemy-migrate==0.7.2
+Flask-Login==0.6.2
