@@ -221,7 +221,7 @@ def deleta_cliente(id):
     db.session.commit()
     # validação
     mensagem = f"{cliente.nome} foi DELETADO(A)! Clique novamente em pesquisar para ver os registros!"
-    return redirect(f'')
+    return render_template("resultado_clientes.html", mensagem_deletar = mensagem)
     # return render_template("resultado_clientes.html", mensagem_deletar = mensagem)
 
 
