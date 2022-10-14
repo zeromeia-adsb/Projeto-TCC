@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Cadastro de produtos -->
+
+<main class="container">
+    <div class="py-5 text-center">
+        <h2>Cadastro de Produtos</h2>
+        <p class="lead">Insira abaixo as informações do produto para cadastro.</p>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-md-12 col-lg-12">
+            <form action="/cadastrar_produto" method="POST">
+                <h4 class="mb-3">Informações do Produto</h4>
+                <div class="row g-3">
+                    <!-- Preenchimento dos campos para produto -->
+                    <div class="col-sm-12 col-md-6">
+                        <label for="nome" class="form-label">Nome<span style="color:red">&nbsp;*</span></label>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <label for="preco" class="form-label">Preço<span style="color:red">&nbsp;*</span></label>
+                        <input type="number" class="form-control" id="valor" name="valor" placeholder="Preço">
+                    </div>
+
+                    <div class="col-sm-12 col-md-12">
+                        <label for="descricao" class="form-label">Descrição<span style="color:red">&nbsp;*</span></label>
+                        <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição">
+                    </div>
+
+                </div>
+
+                <div class="mb-5"> </div> <!-- Espaçamento -->
+
+                <!-- Mensagens de validação -->
+                <div class="col-12 text-center">
+                    <h5 style="color: red;">{{ mensagem }}</h5>
+                    <h5 style="color: green;">{{ mensagem_ok }}</h5>
+                </div>
+
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Cadastrar Produto!</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

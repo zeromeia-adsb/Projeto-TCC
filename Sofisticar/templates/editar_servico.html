@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Editar dados do serviço -->
+
+<main class="container">
+    <div class="py-5 text-center">
+        <h2>Editar Informação de Serviço</h2>
+        <p class="lead">Insira abaixo as novas informações de {{ servico.nome.upper() }} para atualização.</p>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-12">
+            <form action="/editar_servico/{{ servico.id }}" method="POST">
+                <h4 class="mb-3">Informações do Serviço</h4>
+                <div class="row g-3">
+                    <!-- Campos para preenchimento com as novas informações do cliente (já vem marcado com o texto atual - value) -->
+                    <div class="col-sm-12 col-md-6">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{ servico.nome }}">
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <label for="preco" class="form-label">Preço</label>
+                        <input type="number" class="form-control" id="valor" name="valor" placeholder="Preço" value="{{ servico.valor }}">
+                    </div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição" value="{{ servico.descricao }}">
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-12 col-lg-6 p-2">
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Alterar informações</button>
+                        </div>
+                        <div class="col-md-12 col-lg-6 p-2">
+                            <a class="w-100 btn btn-outline-secondary btn-lg" href="javascript:history.back()">Voltar para anterior</a>
+                        </div>
+                    </div> 
+                </div>
+            </form>
+        </div>
+    </div>   
+</main>
+
+{% endblock %}

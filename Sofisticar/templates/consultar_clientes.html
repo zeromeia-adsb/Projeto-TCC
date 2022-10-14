@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Consulta de clientes -->
+
+<main class="container">
+    <div class="py-5 text-center">
+        <h2>Consulta de Clientes</h2>
+        <p class="lead">Insira abaixo uma das informações para pesquisar o cadastro do cliente, ou deixe em branco para retornar todos os registros.</p>
+    </div>
+    <!-- Campos de pesquisa de cliente para consultas -->
+    <div class="row g-5">
+        <div class="col-md-12 col-lg-5">
+            <h4 class="mb-3">Cliente</h4>
+            <form action="/resultado_clientes" method="POST">
+                <label for="info_cliente" class="form-label mb-3">Opções</label>
+                <select class="form-select" name="opcao_cliente">
+                    <option>-- Selecione --</option>
+                    <option name="nome">Nome</option>
+                    <option name="email">E-mail</option>
+                    <option name="telefone">Telefone</option>
+                    <option name="celular">Celular</option>
+                </select>
+                <div class="mb-3"> </div>
+                <label for="campo" class="form-label">Campo</label>
+                <input type="text" class="form-control" name="campo_cliente">
+
+                <div class="mb-4"> </div> <!-- Espaçamento -->
+
+                <button class="w-100 btn btn-outline-primary btn-lg" type="submit">
+                    Pesquisar por Informação do Cliente
+                </button>
+                <small>* ou deixe em branco para retornar todos os resultados.</small>
+            </form>
+        </div>
+
+        <!-- Separador -->
+        <div class="col-md-12 col-lg-2 align-self-center">
+            <strong>
+                <p class="mb-3 text-center">- OU -</p>
+            </strong>
+        </div>
+
+        <!-- Campos de pesquisa de veiculo para consultas (ainda não funcional) -->
+        <div class="col-md-12 col-lg-5">
+            <h4 class="mb-3">Veículo</h4>
+            <form action="/consultar_clientes" method="post">
+                <label for="info_cliente" class="form-label mb-3">Opções</label>
+                <select class="form-select" id="country" required="">
+                    <option value="">-- Selecione --</option>
+                    <option value="">Placa</option>
+                </select>
+                <div class="mb-3"> </div>
+                <label for="campo" class="form-label">Campo</label>
+                <input type="text" class="form-control" id="info_cliente" placeholder="" value="">
+            
+                <div class="mb-4"> </div>
+
+                <button class="w-100 btn btn-outline-primary btn-lg" type="submit">
+                    Pesquisar por Veículo do Cliente
+                </button> 
+                <small>* ou deixe em branco para retornar todos os resultados.</small>          
+            </form>
+            
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}

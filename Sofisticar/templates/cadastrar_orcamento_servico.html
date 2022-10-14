@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Informações de clientes -->
+
+<main class="container">
+
+    <div class="py-5 text-center">
+        <h2>Cadastro de Orçamento - Serviços</h2>
+        <p class="lead">Insira abaixo as informações dos serviços para o orçamento.</p>
+
+        <div class="progress mt-4" style="height: 20px">
+            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #aaa" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Cliente</div>
+            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #aaa" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Veículo</div>
+            <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Serviços</div>
+            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #aaa" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Produtos</div>
+            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #aaa" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Revisão</div>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-12">
+            <table class="table" action="/info_clientes/{{ cliente.id }}" method="POST"> <!-- Caminho para procura (com ID) -->
+                <!-- Tabela com dados do cliente -->
+                <h4 class="mb-3">Dados Pessoais do Cliente</h4>
+                <thead class="col-12">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Celular</th>
+                </thead>
+
+                <tbody class="col-12">
+                    <tr>
+                        <td>{{ cliente.id }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.telefone }}</td>
+                        <td>{{ cliente.celular }}</td>
+                    </tr>
+                </tbody>
+            </table> 
+
+            <div class="mb-5"> </div> <!-- Espaçamento -->
+
+            <table class="table">
+                <!-- Tabela com dados dos veículos do cliente -->
+                <h4 class="mb-3">Dados do Veículo do Cliente</h4>
+                <thead class="col-12">
+                    <th>ID</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Cor</th>
+                    <th>Placa</th>
+                </thead>
+
+                <tbody class="col-12">
+                    <tr>
+                        <td>{{ veiculos.id }}</td>
+                        <td>{{ veiculos.marca }}</td>
+                        <td>{{ veiculos.modelo }}</td>
+                        <td>{{ veiculos.cor }}</td>
+                        <td>{{ veiculos.placa }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mb-5"> </div> <!-- Espaçamento -->
+
+            <table class="table">
+                <h4 class="mb-3">Dados dos Serviços a serem realizados</h4>
+                <thead class="col-12">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
+                </thead>
+            
+                <tbody class="col-12">
+                        {% for item in servico %}
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.nome }}</td>
+                                <td>{{ item.descricao }}</td>
+                                <td>R$ {{ item.valor }}</td>
+                                <td>
+                                    <a href="/cadastrar_orcamento/{{cliente.id}}/{{veiculos.id}}/{{item.id}}"><button type="button" class="btn btn-outline-primary">Selecionar!</button></a>
+                                </td>
+                            </tr>             
+                        {% endfor %}
+
+                </tbody>
+            </table>
+            {{teste}}
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}

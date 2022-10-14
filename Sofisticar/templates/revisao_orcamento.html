@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Informações de clientes -->
+
+<main class="container">
+
+    <div class="py-5 text-center">
+        <h2>Revisão do Orçamento</h2>
+        <p class="lead">Confira abaixo as informações o orçamento.</p>
+
+        <div class="progress mt-4" style="height: 20px">
+            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #aaa" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Cliente</div>
+            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #aaa" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Veículo</div>
+            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #aaa" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Serviços</div>
+            <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #aaa" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Produtos</div>
+            <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Revisão</div>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-12">
+            <table class="table" action="/info_clientes/{{ cliente.id }}" method="POST"> <!-- Caminho para procura (com ID) -->
+                <!-- Tabela com dados do cliente -->
+                <h4 class="mb-3">Dados Pessoais do Cliente</h4>
+                <thead class="col-12">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Celular</th>
+                    <th>Ação</th>
+                </thead>
+
+                <tbody class="col-12">
+                    <tr>
+                        <td>{{ cliente.id }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.telefone }}</td>
+                        <td>{{ cliente.celular }}</td>
+                        <td>
+                            <a href="/cadastrar_orcamento/{{cliente.id}}"><button type="button" class="btn btn-outline-primary">Alterar</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+
+            <div class="mb-5"> </div> <!-- Espaçamento -->
+
+            <table class="table">
+                <!-- Tabela com dados dos veículos do cliente -->
+                <h4 class="mb-3">Dados do Veículo do Cliente</h4>
+                <thead class="col-12">
+                    <th>ID</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Cor</th>
+                    <th>Placa</th>
+                    <th>Ação</th>
+                </thead>
+
+                <tbody class="col-12">
+                    <tr>
+                        <td>{{ veiculo.id }}</td>
+                        <td>{{ veiculo.marca }}</td>
+                        <td>{{ veiculo.modelo }}</td>
+                        <td>{{ veiculo.cor }}</td>
+                        <td>{{ veiculo.placa }}</td>
+                        <td>
+                            <a href="/cadastrar_orcamento/{{cliente.id}}/{{veiculo.id}}"><button type="button" class="btn btn-outline-primary">Alterar</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <div class="mb-5"> </div> <!-- Espaçamento -->
+
+            <table class="table">
+                <h4 class="mb-3">Dados dos Serviços a serem realizados</h4>
+                <thead class="col-12">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
+                </thead>
+            
+                <tbody class="col-12">
+                    <tr>
+                        <td>{{ servico.id }}</td>
+                        <td>{{ servico.nome }}</td>
+                        <td>{{ servico.descricao }}</td>
+                        <td>{{ servico.valor }}</td>
+                        <td>
+                            <a href="/cadastrar_orcamento/{{cliente.id}}/{{veiculo.id}}/{{servico.id}}"><button type="button" class="btn btn-outline-primary">Alterar</button></a>
+                        </td>
+                    </tr>             
+                </tbody>
+            </table>
+
+            <div class="mb-5"> </div> <!-- Espaçamento -->
+
+            <table class="table">
+                <h4 class="mb-3">Dados dos Produtos a serem realizados</h4>
+                <thead class="col-12">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
+                </thead>
+            
+                <tbody class="col-12">
+                    <tr>
+                        <td>{{ produto.id }}</td>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.descricao }}</td>
+                        <td>{{ produto.valor }}</td>
+                        <td>
+                            <a href="/cadastrar_orcamento/{{cliente.id}}/{{veiculo.id}}/{{servico.id}}/{{produto.id}}"><button type="button" class="btn btn-outline-primary">Alterar</button></a>
+                        </td>
+                    </tr>             
+                </tbody>
+            </table>
+
+            <a href="/orcamento"><button type="button" class="btn btn-primary">Confirmar</button></a>
+
+            <a href="/orcamento"><button type="button" class="btn btn-outline-secondary">Cancelar</button></a>
+
+
+
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
