@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Resultado de clientes -->
+
+<main class="container">
+    <div class="py-5 text-center">
+        <h2>Consulta de Clientes</h2>
+        <p class="lead">Insira abaixo uma das informações para pesquisar o cadastro do cliente, ou deixe em branco para retornar todos os registros.</p>
+    </div>
+
+    <div class="container">
+        <!-- Campos de pesquisa para novas consultas -->
+        <form action="/resultado_clientes" class="col-12 d-flex" method="POST">
+            <div class="col-3 p-1">
+                <select class="form-select" name="opcao_cliente">
+                    <option>-- Selecione --</option>
+                    <option>Nome</option>
+                    <option>E-mail</option>
+                    <option>Telefone</option>
+                    <option>Celular</option>
+                    <option>------------------</option>
+                    <option>Placa</option>
+                </select>
+            </div>
+            <div class="col-9 p-1">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Insira uma informação ou deixe em branco para todos os registros" name="campo_cliente">
+                    <button type="submit" class="btn btn-secondary">Pesquisar!</button>
+                </div>
+            </div>
+        </form>
+        
+        <div class="mb-4"> </div> <!-- Espaçamento -->
+        <!-- Títulos da tabela -->
+        <table class="table col-12">
+            <thead class="col-12">
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Celular</th>
+                <th>Ações</th>
+            </thead>
+
+            <!-- Preenchimento da tabela caso a pesquisa seja vazia (retorna todos os resultados do BD) -->
+            <tbody class="col-12">
+                               
+                {% if campo_cliente == '' %}
+                    {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente.id }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.telefone }}</td>
+                        <td>{{ cliente.celular }}</td>
+                        <td>
+                            <a href="/info_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-secondary" >Info</button></a>
+                            <span class="p-2">|</span>
+                            <a href="/editar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                            <span class="p-2">|</span>
+                            <a href="/deletar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-danger">Excluir</button></a>
+                        </td>                       
+                    </tr>
+                    {% endfor %}
+                <!-- Preenchimento da tabela caso a pesquisa seja por nome (pode ser nome ou parte do nome) -->
+                {% elif opcao_cliente == 'Nome' %}
+                    {% for cliente in clientes %}
+                        {% if campo_cliente.upper() in cliente.nome.upper() %}
+                        <tr>
+                            <td>{{ cliente.id }}</td>
+                            <td>{{ cliente.nome }}</td>
+                            <td>{{ cliente.email }}</td>
+                            <td>{{ cliente.telefone }}</td>
+                            <td>{{ cliente.celular }}</td>
+                            <td>
+                                <a href="/info_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-secondary" >Info</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/editar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/deletar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-danger">Excluir</button></a>
+                            </td>                       
+                        </tr>
+                        {% endif %}                   
+                    {% endfor %}
+                <!-- Preenchimento da tabela caso a pesquisa seja por email (pode ser email ou parte do email) -->
+                {% elif opcao_cliente == 'E-mail' %}
+                    {% for cliente in clientes %}
+                        {% if campo_cliente.upper() in cliente.email.upper() %}
+                        <tr>
+                            <td>{{ cliente.id }}</td>
+                            <td>{{ cliente.nome }}</td>
+                            <td>{{ cliente.email }}</td>
+                            <td>{{ cliente.telefone }}</td>
+                            <td>{{ cliente.celular }}</td>
+                            <td>
+                                <a href="/info_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-secondary" >Info</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/editar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/deletar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-danger">Excluir</button></a>
+                            </td>                       
+                        </tr>
+                        {% endif %}                    
+                    {% endfor %}
+                <!-- Preenchimento da tabela caso a pesquisa seja por telefone (pode ser numero total ou parte do numero) -->
+                {% elif opcao_cliente == 'Telefone' %}
+                    {% for cliente in clientes %}
+                        {% if campo_cliente in cliente.telefone %}
+                        <tr>
+                            <td>{{ cliente.id }}</td>
+                            <td>{{ cliente.nome }}</td>
+                            <td>{{ cliente.email }}</td>
+                            <td>{{ cliente.telefone }}</td>
+                            <td>{{ cliente.celular }}</td>
+                            <td>
+                                <a href="/info_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-secondary" >Info</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/editar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/deletar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-danger">Excluir</button></a>
+                            </td>                       
+                        </tr>
+                        {% endif %}                   
+                    {% endfor %}
+                <!-- Preenchimento da tabela caso a pesquisa seja por celular (pode ser numero total ou parte do numero) -->
+                {% elif opcao_cliente == 'Celular'%}
+                    {% for cliente in clientes %}
+                        {% if campo_cliente in cliente.celular %}
+                        <tr>
+                            <td>{{ cliente.id }}</td>
+                            <td>{{ cliente.nome }}</td>
+                            <td>{{ cliente.email }}</td>
+                            <td>{{ cliente.telefone }}</td>
+                            <td>{{ cliente.celular }}</td>
+                            <td>
+                                <a href="/info_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-secondary" >Info</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/editar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/deletar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-danger">Excluir</button></a>
+                            </td>                       
+                        </tr>
+                        {% endif %}                   
+                    {% endfor %}
+
+                {% elif opcao_cliente == 'Placa'%}
+                    {% for veiculo in veiculos %}
+                        {% if campo_cliente.upper() in veiculo.placa.upper() %}
+                            {% for cliente in clientes %}
+                                {% if cliente.id == veiculo.cliente_id %}
+                                    <tr>
+                                        <td>{{ cliente.id }}</td>
+                                        <td>{{ cliente.nome }}</td>
+                                        <td>{{ cliente.email }}</td>
+                                        <td>{{ cliente.telefone }}</td>
+                                        <td>{{ cliente.celular }}</td>
+                                        <td>
+                                            <a href="/info_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-secondary" >Info</button></a>
+                                            <span class="p-2">|</span>
+                                            <a href="/editar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                                            <span class="p-2">|</span>
+                                            <a href="/deletar_clientes/{{cliente.id}}"><button type="button" class="btn btn-outline-danger">Excluir</button></a>
+                                        </td>                       
+                                    </tr>
+                                {% endif %} 
+                            {% endfor %}
+                        {% endif %}                   
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+        <!-- Validações -->  
+        <div class="col-12 p-5 d-flex justify-content-center">
+            <h5><span>{{ mensagem_info }}</span></h5>
+            <h5><span style="color:green">{{ mensagem_editar }}</span></h5>
+            <h5><span style="color:red">{{ mensagem_deletar }}</span></h5>      
+        </div>
+
+    </div>    
+
+</main>
+
+{% endblock %}

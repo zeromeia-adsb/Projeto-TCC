@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Resultado de orçamento -->
+
+<main class="container">
+    <div class="py-5 text-center">
+        <h2>Consulta de Orcamentos</h2>
+        <p class="lead">Insira abaixo uma das informações para pesquisar o cadastro do orçamento, ou deixe em branco para retornar todos os registros.</p>
+    </div>
+
+    <div class="container">
+        <!-- Campos de pesquisa para novas consultas -->
+        <form action="/resultado_servico" class="col-12 d-flex" method="POST">
+            <div class="col-3 p-1">
+                <select class="form-select" name="opcao">
+                    <option>-- Selecione --</option>
+                    <option>Nome</option>
+                </select>
+            </div>
+            <div class="col-9 p-1">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Insira uma informação ou deixe em branco para todos os registros" name="campo">
+                    <button type="submit" class="btn btn-secondary">Pesquisar!</button>
+                </div>
+            </div>
+        </form>
+        
+        <div class="mb-4"> </div> <!-- Espaçamento -->
+        <!-- Títulos da tabela -->
+        <table class="table col-12">
+            <thead class="col-12">
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Descrição</th>
+            </thead>
+
+            <!-- Preenchimento da tabela caso a pesquisa seja vazia (retorna todos os resultados do BD) -->
+            <tbody class="col-12">
+                               
+                {% if campo == '' %}
+                    {% for orcamento in orcamentos %}
+                    <tr>
+                        <td>{{ orcamento.id }}</td>
+                        <td>{{ orcamento.id_cliente }}</td>
+                        <td>
+                            <a href="/info_orcamento/{{orcamento.id}}"><button type="button" class="btn btn-outline-secondary" >Info</button></a>
+                            <span class="p-2">|</span>
+                            <a href="/editar_orcamento/{{orcamento.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                            <span class="p-2">|</span>
+                            <a href="/deletar_orcamento/{{orcamento.id}}"><button type="button" class="btn btn-outline-danger">Excluir</button></a>
+                        </td>                       
+                    </tr>
+                    {% endfor %}
+                <!-- Preenchimento da tabela caso a pesquisa seja por nome (pode ser nome ou parte do nome) -->
+                <!--{% elif opcao == 'Nome' %}
+                    {% for servico in servicos %}
+                        {% if campo.upper() in servico.nome.upper() %}
+                        <tr>
+                            <td>{{ servico.id }}</td>
+                            <td>{{ servico.nome }}</td>
+                            <td>{{ servico.valor }}</td>
+                            <td>{{ servico.descricao }}</td>
+                            <td>
+                                <a href="/info_servico/{{servico.id}}"><button type="button" class="btn btn-outline-secondary" >Info</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/editar_servico/{{servico.id}}"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                                <span class="p-2">|</span>
+                                <a href="/deletar_servico/{{servico.id}}"><button type="button" class="btn btn-outline-danger">Excluir</button></a>
+                            </td>                              
+                        </tr>
+                        {% endif %}                   
+                    {% endfor %} -->
+                <!-- Preenchimento da tabela caso a pesquisa seja por email (pode ser email ou parte do email) -->
+                <!-- {% endif %} -->
+            </tbody>
+        </table>
+        <!-- Validações -->  
+        <div class="col-12 p-5 d-flex justify-content-center">
+            <h5><span>{{ mensagem_info }}</span></h5>
+            <h5><span style="color:green">{{ mensagem_editar }}</span></h5>
+            <h5><span style="color:red">{{ mensagem_deletar }}</span></h5>      
+        </div>
+
+    </div>    
+
+</main>
+
+{% endblock %}

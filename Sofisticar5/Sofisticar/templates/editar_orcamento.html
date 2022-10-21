@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<!-- Informações de clientes -->
+
+<main class="container">
+
+    <div class="py-5 text-center">
+        <h2>Editar Orçamento nº {{ orcamento.id }}</h2>
+        <p class="lead">Selecione abaixo os itens do orçamento.</p>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-12">
+            <form action="/editar_orcamento/{{ orcamento.id }}" method="POST">
+                <table class="table">
+                    <h4 class="mb-3">Serviços</h4>
+                    <thead class="col-12">
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Incluir?</th>
+                    </thead>              
+                    <tbody class="col-12">
+                        {% for serv in servico %}
+                            <tr>
+                                <td>{{ serv.id }}</td>
+                                <td>{{ serv.nome }}</td>
+                                <td>{{ serv.descricao }}</td>
+                                <td>{{ serv.valor }}</td>
+                                <td>
+                                    <input type="checkbox" name="incluir_servico" value="{{serv.id}}"/>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <table class="table">
+                    <h4 class="mb-3">Produtos</h4>
+                    <thead class="col-12">
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Incluir?</th>
+                    </thead>              
+                    <tbody class="col-12">
+                        {% for item in produto %}
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.nome }}</td>
+                                <td>{{ item.descricao }}</td>
+                                <td>{{ item.valor }}</td>
+                                <td>
+                                    <input type="checkbox" name="incluir_produto" value="{{item.id}}"/>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Botões da parte de baixo -->
+                <div class="row g-5 p-3">
+                    <div class="col-md-12 col-lg-6 p-2">
+                        <a href="#">
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">
+                                Atualizar Orçamento
+                            </button>
+                        </a>
+                    </div>
+
+                    <div class="col-md-12 col-lg-6 p-2">
+                        <button class="w-100 btn btn-outline-secondary btn-lg" type="submit" name="return" onclick="history.back()">
+                            Voltar para anterior
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+            {{ mensagem }}
+
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
